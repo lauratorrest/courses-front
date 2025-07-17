@@ -1,1 +1,19 @@
-/* You can add global styles to this file, and also import other style files */
+.sign-button {
+  background-color: #4caf50;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 12px;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+.sign-button:hover {
+  background-color: #43a047;
+}
+
+.sign-button:disabled {
+  background-color: #a5d6a7;
+  cursor: not-allowed;
+}
