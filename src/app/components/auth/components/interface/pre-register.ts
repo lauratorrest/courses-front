@@ -3,3 +3,8 @@ export interface PreRegisterRequest {
     confirmEmail: string;
     fullName: string;
 }
+
+export interface PreRegisterResponse {
+    email: string;
+    fullName: string;
+}

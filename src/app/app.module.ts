@@ -14,6 +14,7 @@ import { MatCard, MatCardModule } from '@angular/material/card';
 import { AuthComponent } from './components/auth/auth.component';
 import { SignInComponent } from './components/auth/components/sign-in/sign-in.component';
 import { SignUpComponent } from './components/auth/components/sign-up/sign-up.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { SignUpComponent } from './components/auth/components/sign-up/sign-up.co
     MatIconModule,
     MatDividerModule,
     MatCardModule,
+    HttpClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
