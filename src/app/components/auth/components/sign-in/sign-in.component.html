@@ -1,5 +1,5 @@
 <div class="card-body p-5">
-  <h3 class="mb-5 text-center">Sign In</h3>
+  <h3 class="mb-5 text-center">Iniciar Sesión</h3>
   <form [formGroup]="signInForm">
     <div class="form-floating mb-4">
       <input type="email" id="email" class="form-control" formControlName="email" placeholder="Email">
@@ -36,7 +36,7 @@
           type="submit" [disabled]="!signInForm.valid || loading" 
           (click)="signIn()">
     <mat-spinner *ngIf="loading" diameter="35" strokeWidth="3" class="white-spinner"></mat-spinner>
-    <div *ngIf="!loading">Sign In</div>
+    <div *ngIf="!loading">Iniciar Sesión</div>
   </button>
 
   <p class="mt-4 small text-muted text-center">
