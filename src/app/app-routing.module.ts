@@ -15,9 +15,11 @@ const routes: Routes = [
       { path: '', redirectTo: 'sign-in', pathMatch: 'full' }
     ]
   },
-  { path: 'home', component: HomeComponent },
-  { path: 'home', loadChildren: () => import('./features/home/home.module').then(m => m.HomeModule) },
-  { path: '**', redirectTo: 'home', pathMatch: 'full' },
+  {
+    path: 'home',
+    loadChildren: () => import('./features/home/home.module').then(m => m.HomeModule)
+  },
+  { path: '**', redirectTo: 'home', pathMatch: 'full' }
 ];
 
 @NgModule({
