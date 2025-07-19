@@ -49,7 +49,7 @@ export class SignInComponent implements OnInit {
     this.authService.signIn(signInRequest).subscribe({
       next: (response) => {
         this.loading = false;
-        localStorage.setItem('currentUser', response.email);
+        localStorage.setItem('cursyaCurrentUser', response.email);
         this.router.navigate(['/home']);
       },
       error: (error) => {

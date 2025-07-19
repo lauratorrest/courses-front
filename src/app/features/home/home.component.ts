@@ -13,9 +13,9 @@ export class HomeComponent implements OnInit {
   constructor(private router: Router){}
 
   ngOnInit(): void {
-    this.currentUserEmail = localStorage.getItem('currentUser');
+    this.currentUserEmail = localStorage.getItem('cursyaCurrentUser');
     if (this.currentUserEmail) {
-      console.log('Bienvenido:', this.currentUserEmail);
+      console.log('user:', this.currentUserEmail);
     } else {
       console.log('No se encontró usuario loggeado.');
       this.router.navigate(['/sign-in']);

@@ -1,8 +1,9 @@
-export class Constants {
-    private static readonly API_ADDRESS = 'http://localhost:8081';
-    private static readonly API_PATH = this.API_ADDRESS + '/coursya/v1/api';
+import { environment } from "src/environments/environment";
 
-    //AUTH
-    public static readonly REGISTER_USER = this.API_PATH + '/register';
-    public static readonly SIGN_IN_USER = this.API_PATH + '/sign-in';
+export class Constants {
+    private static readonly API_PATH = `${environment.apiBaseUrl}`;
+
+  // AUTH
+  public static readonly REGISTER_USER = `${this.API_PATH}/register`;
+  public static readonly SIGN_IN_USER = `${this.API_PATH}/sign-in`;
 }
