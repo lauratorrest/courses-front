@@ -13,7 +13,7 @@ export class HomeComponent implements OnInit {
   constructor(private router: Router){}
 
   ngOnInit(): void {
-    this.currentUserEmail = localStorage.getItem('cursyaCurrentUser');
+    this.currentUserEmail = localStorage.getItem('currentUser');
     if (this.currentUserEmail) {
       console.log('user:', this.currentUserEmail);
     } else {

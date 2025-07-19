@@ -27,7 +27,6 @@ import { MatDividerModule } from "@angular/material/divider";
     AuthComponent,
     SignInComponent,
     SignUpComponent,
-    HomeComponent
   ],
   imports: [
     BrowserModule,
