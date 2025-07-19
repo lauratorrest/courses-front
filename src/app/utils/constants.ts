@@ -1,5 +1,4 @@
 import { environment } from "src/environments/environment";
-import { EmailRequest } from "../features/home/components/initial-content/interface/email-request";
 
 export class Constants {
   

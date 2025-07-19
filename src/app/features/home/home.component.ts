@@ -22,7 +22,7 @@ export class HomeComponent implements OnInit {
   }
 
   private currentUserLogic() {
-    this.currentUserEmail = localStorage.getItem('currentUser');
+    this.currentUserEmail = localStorage.getItem('curseyaCurrentUser');
     if (this.currentUserEmail) {
       console.log('user:', this.currentUserEmail);
     } else {

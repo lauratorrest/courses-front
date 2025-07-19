@@ -8,4 +8,5 @@ export interface RegisterRequest {
 export interface RegisterResponse {
     email: string;
     fullName: string;
+    token: string;
 }

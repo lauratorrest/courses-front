@@ -23,6 +23,7 @@ export class SignInComponent implements OnInit {
     private router: Router,) {}
 
   ngOnInit(): void {
+    localStorage.clear();
     this.buildForm();
   }
 
@@ -49,7 +50,8 @@ export class SignInComponent implements OnInit {
     this.authService.signIn(signInRequest).subscribe({
       next: (response) => {
         this.loading = false;
-        localStorage.setItem('cursyaCurrentUser', response.email);
+        localStorage.setItem('curseyaCurrentUser', response.email);
+        localStorage.setItem('token', response.token);
         this.router.navigate(['/home']);
       },
       error: (error) => {

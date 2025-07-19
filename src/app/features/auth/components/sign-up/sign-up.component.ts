@@ -21,6 +21,7 @@ export class SignUpComponent implements OnInit {
     private alertService: AlertService) {}
 
   ngOnInit(): void {
+    localStorage.clear();
     this.buildForm();
   }
 
@@ -61,7 +62,14 @@ export class SignUpComponent implements OnInit {
     this.authService.register(registerRequest).subscribe({
       next: (response) => {
         this.loading = false;
-        let redirectTo = '/sign-in';
+        let redirectTo: string;
+        if(!response.email || !response.token) {
+          redirectTo = '/sign-in';
+        } else {
+          localStorage.setItem('curseyaCurrentUser', response.email);
+          localStorage.setItem('token', response.token);
+          redirectTo = '/home';
+        }
         this.alertService.successAlert('Éxito', 'Te enviaremos un email para continuar con el registro', redirectTo);
       },
       error: (error) => {
