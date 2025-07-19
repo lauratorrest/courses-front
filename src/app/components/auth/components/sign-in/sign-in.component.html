@@ -10,19 +10,35 @@
       </div>
     </div>
   
-    <div class="form-floating mb-3">
-      <input type="text" id="password" class="form-control"
-              formControlName="password" placeholder="********">
+    <div class="form-floating mb-3 position-relative">
+      <input [type]="showPassword ? 'text' : 'password'" 
+             id="password" 
+             class="form-control" 
+             formControlName="password" 
+             placeholder="********">
       <label for="password">Contraseña</label>
+        
+      <mat-icon 
+        (click)="togglePassword()"
+        class="password-toggle-icon">
+        {{ showPassword ? 'visibility_off' : 'visibility' }}
+      </mat-icon>
+    
       <div class="text-danger small mt-1" *ngIf="password?.invalid && (password?.touched || password?.dirty)">
-        <div *ngIf="password?.errors?.['required']">El nombre es obligatorio.</div>
-        <div *ngIf="password?.errors?.['pattern']">Debe tener al menos una mayuscula, 2 numeros y 8 caracteres en total.</div>
+        <div *ngIf="password?.errors?.['required']">La contraseña es obligatoria.</div>
       </div>
     </div>
 
+
   </form>
   
-  <button class="btn btn-success btn-lg w-100" type="submit" [disabled]="!signInForm.valid" (click)="signIn()">Sign In</button>
+  <button class="btn btn-success btn-lg w-100 d-flex justify-content-center align-items-center" 
+          type="submit" [disabled]="!signInForm.valid || loading" 
+          (click)="signIn()">
+    <mat-spinner *ngIf="loading" diameter="35" strokeWidth="3" class="white-spinner"></mat-spinner>
+    <div *ngIf="!loading">Sign In</div>
+  </button>
+
   <p class="mt-4 small text-muted text-center">
     ¿No tienes cuenta?
     <a routerLink="/sign-up">Regístrate</a>

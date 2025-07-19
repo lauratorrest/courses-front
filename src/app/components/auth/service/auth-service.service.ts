@@ -3,6 +3,7 @@ import { RegisterRequest, RegisterResponse } from '../components/interface/pre-r
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Constants } from 'src/app/utils/constants';
+import { SignInRequest } from '../components/interface/sign-in';
 
 @Injectable({
   providedIn: 'root'
@@ -13,5 +14,9 @@ export class AuthService {
 
   register(registerRequest: RegisterRequest): Observable<RegisterResponse> {
     return this.http.post<RegisterResponse>(Constants.REGISTER_USER, registerRequest);
+  }
+
+  signIn(signInRequest: SignInRequest): Observable<RegisterResponse> {
+    return this.http.post<RegisterResponse>(Constants.SIGN_IN_USER, signInRequest);
   }
 }

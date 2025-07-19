@@ -61,7 +61,8 @@ export class SignUpComponent implements OnInit {
     this.authService.register(registerRequest).subscribe({
       next: (response) => {
         this.loading = false;
-        this.alertService.successAlert('Éxito', 'Te enviaremos un email para continuar con el registro');
+        let redirectTo = '/sign-in';
+        this.alertService.successAlert('Éxito', 'Te enviaremos un email para continuar con el registro', redirectTo);
       },
       error: (error) => {
         this.loading = false;

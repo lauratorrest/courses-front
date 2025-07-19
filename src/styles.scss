@@ -21,3 +21,11 @@
 .white-spinner circle {
   stroke: white !important;
 }
+
+.password-toggle-icon {
+  position: absolute;
+  top: 50%;
+  right: 1rem;
+  transform: translateY(-50%);
+  z-index: 2;
+}
