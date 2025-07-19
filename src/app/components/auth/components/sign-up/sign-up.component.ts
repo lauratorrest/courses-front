@@ -13,6 +13,7 @@ export class SignUpComponent implements OnInit {
 
   signUpForm!: FormGroup;
   loading: boolean = false;
+  showPassword: boolean = false;
   
   constructor(
     private fb: FormBuilder, 
@@ -42,6 +43,10 @@ export class SignUpComponent implements OnInit {
     const email = group.get('email')?.value;
     const confirm = group.get('confirmEmail')?.value;
     return email === confirm ? null : { emailsMismatch: true };
+  }
+
+  togglePassword() {
+    this.showPassword = !this.showPassword;
   }
 
   signUp() {
