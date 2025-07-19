@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
-import { PreRegisterRequest } from './components/interface/pre-register';
 
 @Component({
   selector: 'app-auth',

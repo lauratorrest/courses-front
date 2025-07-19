@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { PreRegisterRequest, PreRegisterResponse } from '../components/interface/pre-register';
+import { RegisterRequest, RegisterResponse } from '../components/interface/pre-register';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
@@ -10,7 +10,7 @@ export class AuthService {
 
   constructor(private http: HttpClient) { }
 
-  preRegister(preRegisterRequest: PreRegisterRequest): Observable<PreRegisterResponse> {
-    return this.http.post<PreRegisterResponse>('http://localhost:8081/coursya/v1/api/authentication/pre-register', preRegisterRequest);
+  register(preRegisterRequest: RegisterRequest): Observable<RegisterResponse> {
+    return this.http.post<RegisterResponse>('http://localhost:8081/coursya/v1/api/authentication/pre-register', preRegisterRequest);
   }
 }
