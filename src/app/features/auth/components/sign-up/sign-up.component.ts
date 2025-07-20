@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
-import { PreRegisterRequest } from '../interface/pre-register';
-import Swal from 'sweetalert2';
+import { RegisterRequest } from '../interface/pre-register';
 import { AlertService } from 'src/app/utils/service/alert/alert.service';
 import { AuthService } from '../../service/auth-service.service';
 
@@ -13,6 +12,8 @@ import { AuthService } from '../../service/auth-service.service';
 export class SignUpComponent implements OnInit {
 
   signUpForm!: FormGroup;
+  loading: boolean = false;
+  showPassword: boolean = false;
   
   constructor(
     private fb: FormBuilder, 
@@ -20,6 +21,7 @@ export class SignUpComponent implements OnInit {
     private alertService: AlertService) {}
 
   ngOnInit(): void {
+    localStorage.clear();
     this.buildForm();
   }
 
@@ -28,7 +30,11 @@ export class SignUpComponent implements OnInit {
       {
         email: ['', [Validators.required, Validators.email]],
         confirmEmail: ['', [Validators.required]],
-        fullName: ['', [Validators.required, Validators.pattern(/^[a-zA-ZÁÉÍÓÚáéíóúñÑ ]+$/)]]
+        fullName: ['', [Validators.required, Validators.pattern(/^[a-zA-ZÁÉÍÓÚáéíóúñÑ ]+$/)]],
+        password: ['', [
+          Validators.required,
+          Validators.pattern(/^(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$/)
+        ]],
       },
       { validators: this.emailsMatchValidator }
     );
@@ -40,18 +46,34 @@ export class SignUpComponent implements OnInit {
     return email === confirm ? null : { emailsMismatch: true };
   }
 
-  preSignUp() {
-    let preRegisterRequest: PreRegisterRequest = {
+  togglePassword() {
+    this.showPassword = !this.showPassword;
+  }
+
+  signUp() {
+    this.loading = true;
+    let registerRequest: RegisterRequest = {
       email: this.signUpForm.controls['email'].value,
       confirmEmail: this.signUpForm.controls['confirmEmail'].value,
       fullName: this.signUpForm.controls['fullName'].value,
+      password: this.signUpForm.controls['password'].value
     }
 
-    this.authService.preRegister(preRegisterRequest).subscribe({
+    this.authService.register(registerRequest).subscribe({
       next: (response) => {
-        this.alertService.successAlert('Éxito', 'Te enviaremos un email para continuar con el registro');
+        this.loading = false;
+        let redirectTo: string;
+        if(!response.email || !response.token) {
+          redirectTo = '/sign-in';
+        } else {
+          localStorage.setItem('curseyaCurrentUser', response.email);
+          localStorage.setItem('token', response.token);
+          redirectTo = '/home';
+        }
+        this.alertService.successAlert('Éxito', 'Te enviaremos un email para continuar con el registro', redirectTo);
       },
       error: (error) => {
+        this.loading = false;
         let errorMessage: string = error.error?.message || 'Ocurrió un error inesperado';
         this.alertService.errorAlert('Error al registrarse', errorMessage);
       }
@@ -68,5 +90,9 @@ export class SignUpComponent implements OnInit {
 
   get fullName() {
     return this.signUpForm.get('fullName');
+  }
+
+  get password() {
+    return this.signUpForm.get('password');
   }
 }

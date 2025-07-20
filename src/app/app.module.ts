@@ -1,43 +1,57 @@
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from "@angular/core";
+import { BrowserModule } from "@angular/platform-browser";
+import { ReactiveFormsModule } from "@angular/forms";
+import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
+import { AppRoutingModule } from "./app-routing.module";
 
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { ReactiveFormsModule } from '@angular/forms';
-import { MatInputModule } from '@angular/material/input';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatButtonModule } from '@angular/material/button';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatIconModule } from '@angular/material/icon';
-import { MatDividerModule } from '@angular/material/divider';
-import { MatCard, MatCardModule } from '@angular/material/card';
-import { AuthComponent } from './components/auth/auth.component';
-import { SignInComponent } from './components/auth/components/sign-in/sign-in.component';
-import { SignUpComponent } from './components/auth/components/sign-up/sign-up.component';
-import { HttpClientModule } from '@angular/common/http';
+// Componentes
+import { AppComponent } from "./app.component";
+import { AuthComponent } from "./features/auth/auth.component";
+import { SignInComponent } from "./features/auth/components/sign-in/sign-in.component";
+import { SignUpComponent } from "./features/auth/components/sign-up/sign-up.component";
+import { HomeComponent } from "./features/home/home.component";
+
+// Angular Material
+import { MatInputModule } from "@angular/material/input";
+import { MatFormFieldModule } from "@angular/material/form-field";
+import { MatButtonModule } from "@angular/material/button";
+import { MatIconModule } from "@angular/material/icon";
+import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
+import { MatCardModule } from "@angular/material/card";
+import { MatCheckboxModule } from "@angular/material/checkbox";
+import { MatDividerModule } from "@angular/material/divider";
+import { AuthInterceptor } from "./utils/service/interceptor/auth-interceptor";
 
 @NgModule({
   declarations: [
     AppComponent,
-    SignUpComponent,
     AuthComponent,
     SignInComponent,
-    SignUpComponent
+    SignUpComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
+    HttpClientModule,
+    // Material modules
     MatInputModule,
     MatFormFieldModule,
     MatButtonModule,
-    MatCheckboxModule,
     MatIconModule,
-    MatDividerModule,
+    MatProgressSpinnerModule,
     MatCardModule,
-    HttpClientModule,
+    MatCheckboxModule,
+    MatDividerModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+
