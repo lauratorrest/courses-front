@@ -36,6 +36,11 @@ export class SignInComponent implements OnInit {
     );
   }
 
+  preventPaste(event: ClipboardEvent): void {
+    event.preventDefault();
+  }
+
+
   togglePassword(): void {
     this.showPassword = !this.showPassword;
   }

@@ -22,34 +22,56 @@
     </div>
 
     <div class="form-floating mb-3">
-      <input type="email" id="confirmEmail" class="form-control"
-              formControlName="confirmEmail" placeholder="Confirm Email">
+      <input
+        type="email"
+        id="confirmEmail"
+        class="form-control"
+        formControlName="confirmEmail"
+        placeholder="Confirm Email"
+        autocomplete="off"
+        autocorrect="off"
+        autocapitalize="off"
+        spellcheck="false"
+        (paste)="preventPaste($event)"
+      >
       <label for="confirmEmail">Confirmar Email</label>
+
       <div class="text-danger small mt-1" *ngIf="confirmEmail?.invalid && (confirmEmail?.touched || confirmEmail?.dirty)">
         <div *ngIf="confirmEmail?.errors?.['required']">Debes confirmar tu email.</div>
       </div>
+    
       <div class="text-danger small mt-1" *ngIf="signUpForm.hasError('emailsMismatch') && confirmEmail?.touched">
         Los correos no coinciden.
       </div>
     </div>
 
     <div class="form-floating mb-3 position-relative">
-      <input [type]="showPassword ? 'text' : 'password'" 
-             id="password" 
-             class="form-control" 
-             formControlName="password" 
-             placeholder="********">
+      <input
+        [type]="showPassword ? 'text' : 'password'"
+        id="password"
+        class="form-control"
+        formControlName="password"
+        placeholder="********"
+        autocomplete="new-password"
+        autocorrect="off"
+        autocapitalize="off"
+        spellcheck="false"
+        (paste)="preventPaste($event)"
+      >
       <label for="password">Contraseña</label>
-        
+
       <mat-icon 
         (click)="togglePassword()"
         class="password-toggle-icon">
         {{ showPassword ? 'visibility_off' : 'visibility' }}
       </mat-icon>
     
-      <div class="text-danger small mt-1" *ngIf="password?.invalid && (password?.touched || password?.dirty)">
+      <div class="text-danger small mt-1"
+           *ngIf="password?.invalid && password?.touched && !password?.pristine">
         <div *ngIf="password?.errors?.['required']">La contraseña es obligatoria.</div>
-        <div *ngIf="password?.errors?.['pattern']">Debe tener al menos una mayúscula, 2 números y mínimo 8 caracteres.</div>
+        <div *ngIf="password?.errors?.['pattern']">
+          Debe tener al menos una mayúscula, 2 números y mínimo 8 caracteres.
+        </div>
       </div>
     </div>
 

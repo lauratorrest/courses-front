@@ -46,6 +46,10 @@ export class SignUpComponent implements OnInit {
     return email === confirm ? null : { emailsMismatch: true };
   }
 
+  preventPaste(event: ClipboardEvent): void {
+    event.preventDefault();
+  }
+
   togglePassword() {
     this.showPassword = !this.showPassword;
   }
