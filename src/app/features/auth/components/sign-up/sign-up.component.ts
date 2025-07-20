@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
-import { RegisterRequest } from '../interface/pre-register';
+import { RegisterRequest, UserRole } from '../interface/register';
 import { AlertService } from 'src/app/utils/service/alert/alert.service';
 import { AuthService } from '../../service/auth-service.service';
 
@@ -56,7 +56,8 @@ export class SignUpComponent implements OnInit {
       email: this.signUpForm.controls['email'].value,
       confirmEmail: this.signUpForm.controls['confirmEmail'].value,
       fullName: this.signUpForm.controls['fullName'].value,
-      password: this.signUpForm.controls['password'].value
+      password: this.signUpForm.controls['password'].value,
+      role: UserRole.USER
     }
 
     this.authService.register(registerRequest).subscribe({

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { RegisterRequest, RegisterResponse } from '../components/interface/pre-register';
+import { RegisterRequest, RegisterResponse } from '../components/interface/register';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Constants } from 'src/app/utils/constants';
