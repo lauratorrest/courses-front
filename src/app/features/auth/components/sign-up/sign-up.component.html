@@ -49,7 +49,7 @@
       <input
         [type]="showPassword ? 'text' : 'password'"
         id="password"
-        class="form-control"
+        class="form-control pe-5"
         formControlName="password"
         placeholder="********"
         autocomplete="new-password"
@@ -60,15 +60,20 @@
       >
       <label for="password">Contraseña</label>
 
-      <mat-icon 
+      <mat-icon
         (click)="togglePassword()"
-        class="password-toggle-icon">
+        class="password-toggle-icon"
+      >
         {{ showPassword ? 'visibility_off' : 'visibility' }}
       </mat-icon>
     
-      <div class="text-danger small mt-1"
-           *ngIf="password?.invalid && password?.touched && !password?.pristine">
-        <div *ngIf="password?.errors?.['required']">La contraseña es obligatoria.</div>
+      <div
+        class="text-danger small mt-1"
+        *ngIf="password?.invalid && password?.touched && !password?.pristine"
+      >
+        <div *ngIf="password?.errors?.['required']">
+          La contraseña es obligatoria.
+        </div>
         <div *ngIf="password?.errors?.['pattern']">
           Debe tener al menos una mayúscula, 2 números y mínimo 8 caracteres.
         </div>
