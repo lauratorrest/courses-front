@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { EmailRequest } from '../../interface/email-request';
+import { EmailRequest } from '../../interface/user-request';
 import { UserService } from '../../service/user/user.service';
 import { AlertService } from '../../service/alert/alert.service';
 
@@ -23,7 +23,7 @@ export class NavBarComponent implements OnInit {
   }
 
   private currentUserLogic() {
-    const user = localStorage.getItem('curseyaCurrentUser');
+    const user = localStorage.getItem('currentUser');
     const token = localStorage.getItem('token');
     
     if (!user || !token) {
@@ -44,7 +44,7 @@ export class NavBarComponent implements OnInit {
           if(response.profilePictureUrl){
             this.profilePictureUrl = response.profilePictureUrl;
           } else {
-            this.nameInitial = response.fullName[0];
+            this.nameInitial = response.fullName[0].toLocaleUpperCase();
           }
         },
         error: (error) => {

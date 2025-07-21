@@ -7,12 +7,14 @@ import Swal from 'sweetalert2';
 })
 export class AlertService {
 
+  successTitle: string = 'Éxito';
+
   constructor(private router: Router) { }
 
-  successAlert(title:string, message: string, path?: string) {
+  successAlert(message: string, path?: string) {
     Swal.fire({
       icon: 'success',
-      title: title,
+      title: this.successTitle,
       text: message,
       confirmButtonText: 'Aceptar',
       confirmButtonColor: '#28a745'

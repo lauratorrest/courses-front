@@ -70,11 +70,11 @@ export class SignUpComponent implements OnInit {
         if(!response.email || !response.token) {
           redirectTo = '/auth/sign-in';
         } else {
-          localStorage.setItem('curseyaCurrentUser', response.email);
+          localStorage.setItem('currentUser', response.email);
           localStorage.setItem('token', response.token);
           redirectTo = '/home';
         }
-        this.alertService.successAlert('Éxito', 'Te enviaremos un email para continuar con el registro', redirectTo);
+        this.alertService.successAlert('Te enviaremos un email para continuar con el registro', redirectTo);
       },
       error: (error) => {
         let errorMessage: string = error.error?.message || 'Ocurrió un error inesperado';

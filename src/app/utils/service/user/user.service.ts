@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Constants } from 'src/app/utils/constants';
-import { EmailRequest } from '../../interface/email-request';
+import { EmailRequest, UpdateUserDetailsRequest } from '../../interface/user-request';
 import { InitialContentUserDataResponse, UserDetailedDataResponse } from '../../interface/user-info-response';
 
 @Injectable({
@@ -20,5 +20,8 @@ export class UserService {
     return this.http.post<UserDetailedDataResponse>(Constants.FIND_USER_DETAILED_INFO, request);
   }
 
+  updateUserDetailedData(request: UpdateUserDetailsRequest): Observable<UserDetailedDataResponse> {
+    return this.http.put<UserDetailedDataResponse>(Constants.UPDATE_USER_DETAILED_DATA, request);
+  }
   
 }

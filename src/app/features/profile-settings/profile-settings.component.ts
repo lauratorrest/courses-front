@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserService } from '../../utils/service/user/user.service';
-import { EmailRequest } from 'src/app/utils/interface/email-request';
+import { EmailRequest, UpdateUserDetailsRequest } from 'src/app/utils/interface/user-request';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UserDetailedDataResponse } from 'src/app/utils/interface/user-info-response';
+import { AlertService } from 'src/app/utils/service/alert/alert.service';
 
 @Component({
   selector: 'app-settings',
@@ -18,7 +19,11 @@ export class SettingsComponent implements OnInit {
   savingIsLoading: boolean = false;
   profileInfoForm!: FormGroup;
 
-  constructor(private fb: FormBuilder, private router: Router, private userService: UserService){}
+  constructor(
+    private fb: FormBuilder, 
+    private router: Router, 
+    private userService: UserService, 
+    private alertService: AlertService){}
 
   ngOnInit(): void {
     this.currentUserLogic();
@@ -27,7 +32,7 @@ export class SettingsComponent implements OnInit {
   }
 
   private currentUserLogic() {
-    this.currentUserEmail = localStorage.getItem('curseyaCurrentUser');
+    this.currentUserEmail = localStorage.getItem('currentUser');
     if (!this.currentUserEmail) {
       this.logout();
     }
@@ -73,7 +78,27 @@ export class SettingsComponent implements OnInit {
   updateProfileInfo() {
     this.savingIsLoading = true;
     
-    
+    let updateRequest: UpdateUserDetailsRequest = {
+      email: String(localStorage.getItem('currentUser')),
+      fullName: this.profileInfoForm.controls['fullName'].value,
+      webPageUrl: this.profileInfoForm.controls['webPageUrl'].value,
+      linkedInUrl: this.profileInfoForm.controls['linkedInUrl'].value,
+      youtubeChannelUrl: this.profileInfoForm.controls['youtubeChannelUrl'].value,
+      facebookUrl: this.profileInfoForm.controls['facebookUrl'].value,
+      instagramUrl: this.profileInfoForm.controls['instagramUrl'].value,
+      profession: this.profileInfoForm.controls['profession'].value,
+      aboutMe: this.profileInfoForm.controls['aboutMe'].value
+    }
+
+    this.userService.updateUserDetailedData(updateRequest).subscribe({
+      next: (response) => {
+        this.alertService.successAlert('Tu información fue actualizada.');
+      },
+      error: (error) => {
+        let errorMessage: string = error.error?.message || 'Ocurrió un error inesperado';
+        this.alertService.errorAlert('Error al iniciar sesión', errorMessage);
+      }
+    });
 
     this.savingIsLoading = false;
   }

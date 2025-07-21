@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserService } from '../../utils/service/user/user.service';
-import { EmailRequest } from '../../utils/interface/email-request';
+import { EmailRequest } from '../../utils/interface/user-request';
 
 @Component({
   selector: 'app-home',
@@ -20,7 +20,7 @@ export class HomeComponent implements OnInit {
   }
 
   private currentUserLogic() {
-    this.currentUserEmail = localStorage.getItem('curseyaCurrentUser');
+    this.currentUserEmail = localStorage.getItem('currentUser');
     if (!this.currentUserEmail) {
       this.logout();
     }

@@ -57,7 +57,7 @@ export class SignInComponent implements OnInit {
 
     this.authService.signIn(signInRequest).subscribe({
       next: (response) => {
-        localStorage.setItem('curseyaCurrentUser', response.email);
+        localStorage.setItem('currentUser', response.email);
         localStorage.setItem('token', response.token);
         this.router.navigate(['/home']);
       },

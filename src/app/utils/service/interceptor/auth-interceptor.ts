@@ -28,7 +28,7 @@ export class AuthInterceptor implements HttpInterceptor {
       catchError((error: HttpErrorResponse) => {
         if (error.status === 401 && !isExcluded) {
           localStorage.removeItem('token');
-          localStorage.removeItem('curseyaCurrentUser');
+          localStorage.removeItem('currentUser');
           this.router.navigate(['/auth/sign-in']);
         }
         return throwError(() => error);
