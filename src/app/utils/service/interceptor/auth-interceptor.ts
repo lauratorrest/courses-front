@@ -1,27 +1,38 @@
-import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from "@angular/common/http";
+import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Observable } from "rxjs";
+import { catchError, Observable, throwError } from "rxjs";
 import { Constants } from "../../constants";
+import { Router } from "@angular/router";
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
     
-    private readonly excludedPaths = [Constants.REGISTER_USER, Constants.SIGN_IN_USER];
-    
-    intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        const token = localStorage.getItem('token');
+  private readonly excludedPaths = [Constants.REGISTER_USER, Constants.SIGN_IN_USER];
 
-        const isExcluded = this.excludedPaths.some(path => req.url.endsWith(path));
+  constructor(private router: Router) {}
 
-        if (token && !isExcluded) {
-            const authReq = req.clone({
-              setHeaders: {
-                Authorization: `Bearer ${token}`
-              }
-            });
-            return next.handle(authReq);
+  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    const token = localStorage.getItem('token');
+    const isExcluded = this.excludedPaths.some(path => req.url.endsWith(path));
+
+    let request = req;
+    if (token && !isExcluded) {
+      request = req.clone({
+        setHeaders: {
+          Authorization: `Bearer ${token}`
         }
-    
-        return next.handle(req);
+      });
     }
+
+    return next.handle(request).pipe(
+      catchError((error: HttpErrorResponse) => {
+        if (error.status === 401 && !isExcluded) {
+          localStorage.removeItem('token');
+          localStorage.removeItem('curseyaCurrentUser');
+          this.router.navigate(['/auth/sign-in']);
+        }
+        return throwError(() => error);
+      })
+    );
+  }
 }

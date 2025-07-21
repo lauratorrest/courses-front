@@ -3,23 +3,26 @@ import { RouterModule, Routes } from '@angular/router';
 import { AuthComponent } from './features/auth/auth.component';
 import { SignInComponent } from './features/auth/components/sign-in/sign-in.component';
 import { SignUpComponent } from './features/auth/components/sign-up/sign-up.component';
-import { HomeComponent } from './features/home/home.component';
+import { SettingsComponent } from './features/profile-settings/profile-settings.component';
 
 const routes: Routes = [
   {
     path: '',
+    loadChildren: () => import('./features/home/home.module').then(m => m.HomeModule)
+  },
+  {
+    path: 'auth',
     component: AuthComponent,
     children: [
       { path: 'sign-in', component: SignInComponent },
-      { path: 'sign-up', component: SignUpComponent },
-      { path: '', redirectTo: 'sign-in', pathMatch: 'full' }
+      { path: 'sign-up', component: SignUpComponent }
     ]
   },
   {
-    path: 'home',
-    loadChildren: () => import('./features/home/home.module').then(m => m.HomeModule)
+    path: 'profile-settings',
+    component: SettingsComponent,
   },
-  { path: '**', redirectTo: 'home', pathMatch: 'full' }
+  { path: '**', redirectTo: '', pathMatch: 'full' }
 ];
 
 @NgModule({

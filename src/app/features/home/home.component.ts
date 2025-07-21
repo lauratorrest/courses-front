@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { UserService } from './components/initial-content/service/user.service';
-import { EmailRequest } from './components/initial-content/interface/email-request';
+import { UserService } from '../../utils/service/user/user.service';
+import { EmailRequest } from '../../utils/interface/email-request';
 
 @Component({
   selector: 'app-home',
@@ -11,8 +11,6 @@ import { EmailRequest } from './components/initial-content/interface/email-reque
 export class HomeComponent implements OnInit {
 
   currentUserEmail: string | null = null;
-  nameInitial: string | undefined;
-  profilePicUrl: string | undefined;
 
   constructor(private router: Router, private userService: UserService){}
 
@@ -23,10 +21,8 @@ export class HomeComponent implements OnInit {
 
   private currentUserLogic() {
     this.currentUserEmail = localStorage.getItem('curseyaCurrentUser');
-    if (this.currentUserEmail) {
-      console.log('user:', this.currentUserEmail);
-    } else {
-      this.router.navigate(['/sign-in']);
+    if (!this.currentUserEmail) {
+      this.logout();
     }
   }
 
@@ -35,12 +31,12 @@ export class HomeComponent implements OnInit {
       email: String(this.currentUserEmail)
     }
     this.userService.getInitialContentUserData(emailRequest).subscribe(response => {
-      if(response.profilePicUrl) {
-        this.profilePicUrl = response.profilePicUrl;
-      } else {
-        this.nameInitial = response.fullName[0];
-      }
+      
     });
+  }
+
+  logout() {
+    this.router.navigate(['/auth/sign-in']);
   }
 
 }

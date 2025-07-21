@@ -31,7 +31,10 @@ export class SignInComponent implements OnInit {
     this.signInForm = this.fb.group(
       {
         email: ['', [Validators.required, Validators.email]],
-        password: ['', [Validators.required]]
+        password: ['', [
+          Validators.required,
+          Validators.pattern(/^(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$/)
+        ]],
       }
     );
   }
@@ -54,17 +57,16 @@ export class SignInComponent implements OnInit {
 
     this.authService.signIn(signInRequest).subscribe({
       next: (response) => {
-        this.loading = false;
         localStorage.setItem('curseyaCurrentUser', response.email);
         localStorage.setItem('token', response.token);
         this.router.navigate(['/home']);
       },
       error: (error) => {
-        this.loading = false;
         let errorMessage: string = error.error?.message || 'Ocurrió un error inesperado';
         this.alertService.errorAlert('Error al iniciar sesión', errorMessage);
       }
     });
+    this.loading = false;
   }
 
   get email() {

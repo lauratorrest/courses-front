@@ -66,10 +66,9 @@ export class SignUpComponent implements OnInit {
 
     this.authService.register(registerRequest).subscribe({
       next: (response) => {
-        this.loading = false;
         let redirectTo: string;
         if(!response.email || !response.token) {
-          redirectTo = '/sign-in';
+          redirectTo = '/auth/sign-in';
         } else {
           localStorage.setItem('curseyaCurrentUser', response.email);
           localStorage.setItem('token', response.token);
@@ -78,11 +77,11 @@ export class SignUpComponent implements OnInit {
         this.alertService.successAlert('Éxito', 'Te enviaremos un email para continuar con el registro', redirectTo);
       },
       error: (error) => {
-        this.loading = false;
         let errorMessage: string = error.error?.message || 'Ocurrió un error inesperado';
         this.alertService.errorAlert('Error al registrarse', errorMessage);
       }
     });
+    this.loading = false;
   }
 
   get email() {

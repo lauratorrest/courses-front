@@ -86,10 +86,10 @@
           type="submit" [disabled]="!signUpForm.valid || loading" 
           (click)="signUp()">
     <mat-spinner *ngIf="loading" diameter="35" strokeWidth="3" class="white-spinner"></mat-spinner>
-    <div *ngIf="!loading">Sign Up</div>
+    <div *ngIf="!loading">Registrarse</div>
   </button>
   <p class="mt-4 small text-muted text-center">
     ¿Ya tienes cuenta?
-    <a routerLink="/sign-in">Inicia sesión</a>
+    <a routerLink="/auth/sign-in">Inicia sesión</a>
   </p>
 </div>
