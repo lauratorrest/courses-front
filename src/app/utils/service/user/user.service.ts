@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Constants } from 'src/app/utils/constants';
-import { EmailRequest, UpdateUserDetailsRequest } from '../../interface/user-request';
+import { EmailRequest, UpdateProfilePicRequest, UpdateUserDetailsRequest } from '../../interface/user-request';
 import { InitialContentUserDataResponse, UserDetailedDataResponse } from '../../interface/user-info-response';
 
 @Injectable({
@@ -22,6 +22,10 @@ export class UserService {
 
   updateUserDetailedData(request: UpdateUserDetailsRequest): Observable<UserDetailedDataResponse> {
     return this.http.put<UserDetailedDataResponse>(Constants.UPDATE_USER_DETAILED_DATA, request);
+  }
+
+  uploadUserProfilePicUrl(request: UpdateProfilePicRequest): Observable<any> {
+    return this.http.put<any>(Constants.UPDATE_PROFILE_PIC_URL, request);
   }
   
 }

@@ -13,3 +13,8 @@ export interface UpdateUserDetailsRequest{
     profession: string;
     aboutMe: string;
 }
+
+export interface UpdateProfilePicRequest {
+    email: string;
+    profilePictureUrl: string;
+}

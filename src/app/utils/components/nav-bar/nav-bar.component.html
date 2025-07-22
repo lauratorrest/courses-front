@@ -3,7 +3,7 @@
     <button class="btn" type="button">
       <i class="fas fa-bars"></i>
     </button>
-    <span class="navbar-brand mx-auto fw-bold fs-5" (click)="goToHome()">CourseYa</span>
+    <span class="navbar-brand mx-auto fw-bold fs-5" style="cursor: pointer;" (click)="goToHome()">CourseYa</span>
     <div class="d-flex align-items-center gap-3">
       <!-- Carrito -->
       <a href="#" class="text-dark">
@@ -17,14 +17,13 @@
         </span>
       </a>
       <!-- Botón avatar con mat-menu -->
-      <button mat-button [matMenuTriggerFor]="avatarMenu" class="p-0 m-0" style="border: none; background: transparent;">
-        <div class="rounded-circle overflow-hidden d-flex justify-content-center align-items-center"
-             style="width: 32px; height: 32px; background-color: #198754;">
+      <button mat-button [matMenuTriggerFor]="avatarMenu" class="p-0 m-0 avatar-button">
+        <div class="rounded-circle overflow-hidden d-flex justify-content-center align-items-center avatar-content">
           <img *ngIf="profilePictureUrl"
                [src]="profilePictureUrl"
                alt="Avatar"
-               style="width: 100%; height: 100%; object-fit: cover;">
-          <div *ngIf="!profilePictureUrl" style="color: white; font-weight: bold;">
+               class="avatar-img">
+          <div *ngIf="!profilePictureUrl" class="avatar-letter">
             {{ nameInitial }}
           </div>
         </div>

@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { EmailRequest } from '../../interface/user-request';
 import { UserService } from '../../service/user/user.service';
 import { AlertService } from '../../service/alert/alert.service';
+import { Constants } from '../../constants';
 
 @Component({
   selector: 'app-nav-bar',
@@ -41,11 +42,11 @@ export class NavBarComponent implements OnInit {
     this.userService.getInitialContentUserData(emailRequest).subscribe(
       {
         next: (response) => {
+          console.log('response: ', response);
           if(response.profilePictureUrl){
-            this.profilePictureUrl = response.profilePictureUrl;
-          } else {
-            this.nameInitial = response.fullName[0].toLocaleUpperCase();
+            this.profilePictureUrl = Constants.CLOUDINARY_PREFIX + response.profilePictureUrl;
           }
+          this.nameInitial = response.fullName[0].toLocaleUpperCase();
         },
         error: (error) => {
           let errorMessage: string = error.error?.message || 'Ocurrió un error inesperado';

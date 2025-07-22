@@ -7,13 +7,20 @@
     <div class="row align-items-start">
     <!-- Avatar a la izquierda -->
     <div class="col-md-4 text-center mb-4 mb-md-0">
-      <button mat-button class="p-0 m-0" style="border: none; background: transparent;">
-        <div class="rounded-circle overflow-hidden d-flex justify-content-center align-items-center mx-auto"
-             style="width: 200px; height: 200px; background-color: #198754;">
+      <input #fileInput type="file"
+         accept="image/*"
+         (change)="onFileSelected($event)"
+         hidden />
+         
+      <button mat-button class="p-0 m-0 avatar-button" (click)="fileInput.click()">
+        <div class="rounded-circle overflow-hidden d-flex justify-content-center align-items-center mx-auto avatar-settings-content">
           <img *ngIf="profilePictureUrl"
                [src]="profilePictureUrl"
                alt="Avatar"
-               style="width: 100%; height: 100%; object-fit: cover;">
+               class="avatar-img">
+        </div>
+        <div *ngIf="!profilePictureUrl" class="avatar-letter">
+          {{ nameInitial }}
         </div>
       </button>
     </div>

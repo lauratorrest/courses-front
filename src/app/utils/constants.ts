@@ -12,4 +12,10 @@ export class Constants {
   public static readonly FIND_USER_INITIAL_INFO = `${this.API_PATH}/user/find-by-email`;
   public static readonly FIND_USER_DETAILED_INFO = `${this.API_PATH}/user/details-by-email`;
   public static readonly UPDATE_USER_DETAILED_DATA = `${this.API_PATH}/user/update-details`;
+  public static readonly UPDATE_PROFILE_PIC_URL = `${this.API_PATH}/user/update-pic-url`;
+
+  //FILES
+  public static readonly UPLOAD_FILE = `${this.API_PATH}/file/upload`
+  public static readonly CLOUDINARY_PREFIX = `https://res.cloudinary.com`
+
 }
