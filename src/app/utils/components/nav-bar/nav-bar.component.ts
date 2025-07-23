@@ -42,7 +42,6 @@ export class NavBarComponent implements OnInit {
     this.userService.getInitialContentUserData(emailRequest).subscribe(
       {
         next: (response) => {
-          console.log('response: ', response);
           if(response.profilePictureUrl){
             this.profilePictureUrl = Constants.CLOUDINARY_PREFIX + response.profilePictureUrl;
           }
@@ -59,8 +58,16 @@ export class NavBarComponent implements OnInit {
     this.router.navigate(['']);
   }
 
+  goToProfileInfo() {
+    this.router.navigate(['/profile/info']);
+  }
+
+  goToUserCourses() {
+    this.router.navigate(['/profile/courses']);
+  }
+
   goToSettings() {
-    this.router.navigate(['/profile-settings']);
+    this.router.navigate(['/profile/settings']);
   }
 
   logout() {

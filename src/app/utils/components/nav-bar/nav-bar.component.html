@@ -17,7 +17,7 @@
         </span>
       </a>
       <!-- Botón avatar con mat-menu -->
-      <button mat-button [matMenuTriggerFor]="avatarMenu" class="p-0 m-0 avatar-button">
+      <button mat-button [matMenuTriggerFor]="avatarMenu" class="p-0 m-0 avatar-button avatar-navbar">
         <div class="rounded-circle overflow-hidden d-flex justify-content-center align-items-center avatar-content">
           <img *ngIf="profilePictureUrl"
                [src]="profilePictureUrl"
@@ -29,9 +29,14 @@
         </div>
       </button>
       <mat-menu #avatarMenu="matMenu">
-        <button mat-menu-item routerLink="/profile">
+        <button mat-menu-item (click)="goToProfileInfo()">
           <mat-icon style="color: black;">account_circle</mat-icon>
           Mi perfil
+        </button>
+
+        <button mat-menu-item (click)="goToUserCourses()">
+          <mat-icon style="color: black;">edit</mat-icon>
+          Mis Cursos
         </button>
       
         <button mat-menu-item (click)="goToSettings()">

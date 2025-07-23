@@ -3,7 +3,7 @@
   <form [formGroup]="signUpForm">
      
     <div class="form-floating mb-3">
-      <input type="text" id="fullName" class="form-control"
+      <input type="text" id="fullName" class="form-control custom-form-field"
               formControlName="fullName" placeholder="Nombre completo">
       <label for="fullName">Nombre Completo</label>
       <div class="text-danger small mt-1" *ngIf="fullName?.invalid && (fullName?.touched || fullName?.dirty)">
@@ -12,8 +12,8 @@
       </div>
     </div>
 
-    <div class="form-floating mb-4">
-      <input type="email" id="email" class="form-control" formControlName="email" placeholder="Email">
+    <div class="form-floating mb-3">
+      <input type="email" id="email" class="form-control custom-form-field" formControlName="email" placeholder="Email">
       <label for="email">Email</label>
       <div class="text-danger small mt-1" *ngIf="email?.invalid && (email?.touched || this.signUpForm.get('email')?.dirty)">
         <div *ngIf="email?.errors?.['required']">El email es obligatorio.</div>
@@ -25,7 +25,7 @@
       <input
         type="email"
         id="confirmEmail"
-        class="form-control"
+        class="form-control custom-form-field"
         formControlName="confirmEmail"
         placeholder="Confirm Email"
         autocomplete="off"
@@ -45,11 +45,11 @@
       </div>
     </div>
 
-    <div class="form-floating mb-3 position-relative">
+    <div class="form-floating mb-4 position-relative">
       <input
         [type]="showPassword ? 'text' : 'password'"
         id="password"
-        class="form-control pe-5"
+        class="form-control pe-5 custom-form-field"
         formControlName="password"
         placeholder="********"
         autocomplete="new-password"
@@ -82,8 +82,10 @@
 
   </form>
   
-  <button class="btn btn-success btn-lg w-100 d-flex justify-content-center align-items-center" 
-          type="submit" [disabled]="!signUpForm.valid || loading" 
+  <button class="btn btn-success btn-lg d-flex w-100 justify-content-center align-items-center" 
+          style="border-radius: 3px;"
+          type="submit" 
+          [disabled]="!signUpForm.valid || loading" 
           (click)="signUp()">
     <mat-spinner *ngIf="loading" diameter="35" strokeWidth="3" class="white-spinner"></mat-spinner>
     <div *ngIf="!loading">Registrarse</div>

@@ -1,88 +1,103 @@
 <div class="d-flex flex-column min-vh-100">
   <app-nav-bar></app-nav-bar>
 
-  <div class="flex-fill container my-4">
-    <h5 class="mb-4">Configuración de Perfil</h5>
+  <div *ngIf="userInfoIsLoading" class="d-flex flex-fill justify-content-center align-items-center full-screen-loader">
+    <mat-spinner diameter="50" strokeWidth="4" class="custom-green-spinner"></mat-spinner>
+  </div>
 
-    <div class="row align-items-start">
-    <!-- Avatar a la izquierda -->
-    <div class="col-md-4 text-center mb-4 mb-md-0">
-      <input #fileInput type="file"
-         accept="image/*"
-         (change)="onFileSelected($event)"
-         hidden />
-         
-      <button mat-button class="p-0 m-0 avatar-button" (click)="fileInput.click()">
-        <div class="rounded-circle overflow-hidden d-flex justify-content-center align-items-center mx-auto avatar-settings-content">
-          <img *ngIf="profilePictureUrl"
-               [src]="profilePictureUrl"
-               alt="Avatar"
-               class="avatar-img">
-        </div>
-        <div *ngIf="!profilePictureUrl" class="avatar-letter">
-          {{ nameInitial }}
-        </div>
-      </button>
-    </div>
+  <div *ngIf="!userInfoIsLoading" class="flex-fill w-100 px-4 py-4">
+    <h5 style="margin-left: 20px; margin-bottom: 50px;">Configuración de Perfil</h5>
 
-    <div class="col-md-8">
-      <form [formGroup]="profileInfoForm">
-        <div class="form-floating mb-3">
-          <input type="text" id="fullName" class="form-control" formControlName="fullName" placeholder="Nombre completo">
-          <label for="fullName">Nombre completo</label>
-          <div class="text-danger small mt-1" *ngIf="profileInfoForm.get('fullName')?.invalid && profileInfoForm.get('fullName')?.touched">
-            <div *ngIf="profileInfoForm.get('fullName')?.errors?.['required']">El nombre es obligatorio.</div>
+    <div class="row">
+      <div class="col-md-3 col-12 text-center mb-4">
+        <input #fileInput type="file" accept="image/*" (change)="onFileSelected($event)" hidden />
+        <button mat-button class="p-0 m-0 avatar-button avatar-settings" [disabled]="uploadingImageLoading" (click)="fileInput.click()">
+          <div class="rounded-circle overflow-hidden d-flex justify-content-center align-items-center mx-auto avatar-settings-content">
+            <img *ngIf="profilePictureUrl" [src]="profilePictureUrl" alt="Avatar" class="avatar-img">
+            <div *ngIf="!profilePictureUrl" class="avatar-letter">{{ nameInitial }}</div>
+            <div *ngIf="uploadingImageLoading" class="avatar-overlay d-flex justify-content-center align-items-center">
+              <mat-spinner diameter="30" strokeWidth="4" class="white-spinner"></mat-spinner>
+            </div>
           </div>
-        </div>
+        </button>
+      </div>
+    
+      <div class="col-md-5 col-12 mb-4">
+        <form [formGroup]="profileInfoForm" class="d-flex flex-column">
+          <div>
+            <div class="form-floating mb-3">
+              <input type="text" id="fullName" class="form-control custom-form-field" formControlName="fullName" placeholder="Nombre completo">
+              <label for="fullName">Nombre completo</label>
+            </div>
+          
+            <div class="form-floating mb-3">
+              <input type="text" id="profession" class="form-control custom-form-field" formControlName="profession" placeholder="Profesión">
+              <label for="profession">Profesión</label>
+            </div>
+          </div>
+        
+          <div class="form-floating mb-3">
+            <textarea id="aboutMe" class="form-control custom-form-field" formControlName="aboutMe" placeholder="Sobre mí" style="height: 206px;"></textarea>
+            <label for="aboutMe">Sobre mí</label>
+          </div>
+        </form>
+      </div>
+    
+      <div class="col-md-4 col-12">
+        <form [formGroup]="profileInfoForm">
+          <div class="form-floating mb-3">
+            <input type="url" id="webPageUrl" class="form-control custom-form-field" formControlName="webPageUrl" placeholder="Página web">
+            <label for="webPageUrl">Página web</label>
+            <mat-icon class="password-toggle-icon" (click)="openLink(profileInfoForm.get('webPageUrl')?.value)">
+              open_in_new
+            </mat-icon>
+          </div>
+        
+          <div class="form-floating mb-3">
+            <input type="url" id="linkedInUrl" class="form-control custom-form-field" formControlName="linkedInUrl" placeholder="LinkedIn">
+            <label for="linkedInUrl">LinkedIn</label>
+            <mat-icon class="password-toggle-icon" (click)="openLink(profileInfoForm.get('linkedInUrl')?.value)">
+              open_in_new
+            </mat-icon>
+          </div>
+        
+          <div class="form-floating mb-3">
+            <input type="url" id="youtubeChannelUrl" class="form-control custom-form-field" formControlName="youtubeChannelUrl" placeholder="YouTube">
+            <label for="youtubeChannelUrl">Canal de YouTube</label>
+            <mat-icon class="password-toggle-icon" (click)="openLink(profileInfoForm.get('youtubeChannelUrl')?.value)">
+              open_in_new
+            </mat-icon>
+          </div>
+        
+          <div class="form-floating mb-3">
+            <input type="url" id="facebookUrl" class="form-control custom-form-field" formControlName="facebookUrl" placeholder="Facebook">
+            <label for="facebookUrl">Facebook</label>
+            <mat-icon class="password-toggle-icon" (click)="openLink(profileInfoForm.get('facebookUrl')?.value)">
+              open_in_new
+            </mat-icon>
+          </div>
+        
+          <div class="form-floating mb-3">
+            <input type="url" id="instagramUrl" class="form-control custom-form-field" formControlName="instagramUrl" placeholder="Instagram">
+            <label for="instagramUrl">Instagram</label>
+            <mat-icon class="password-toggle-icon" (click)="openLink(profileInfoForm.get('instagramUrl')?.value)">
+              open_in_new
+            </mat-icon>
+          </div>
+        </form>
 
-        <div class="form-floating mb-3">
-          <input type="url" id="webPageUrl" class="form-control" formControlName="webPageUrl" placeholder="Página web">
-          <label for="webPageUrl">Página web</label>
-        </div>
-
-        <div class="form-floating mb-3">
-          <input type="url" id="linkedInUrl" class="form-control" formControlName="linkedInUrl" placeholder="LinkedIn">
-          <label for="linkedInUrl">LinkedIn</label>
-        </div>
-
-        <div class="form-floating mb-3">
-          <input type="url" id="youtubeChannelUrl" class="form-control" formControlName="youtubeChannelUrl" placeholder="YouTube">
-          <label for="youtubeChannelUrl">Canal de YouTube</label>
-        </div>
-
-        <div class="form-floating mb-3">
-          <input type="url" id="facebookUrl" class="form-control" formControlName="facebookUrl" placeholder="Facebook">
-          <label for="facebookUrl">Facebook</label>
-        </div>
-
-        <div class="form-floating mb-3">
-          <input type="url" id="instagramUrl" class="form-control" formControlName="instagramUrl" placeholder="Instagram">
-          <label for="instagramUrl">Instagram</label>
-        </div>
-
-        <div class="form-floating mb-3">
-          <input type="text" id="profession" class="form-control" formControlName="profession" placeholder="Profesión">
-          <label for="profession">Profesión</label>
-        </div>
-
-        <div class="form-floating">
-          <textarea id="aboutMe" class="form-control" formControlName="aboutMe" placeholder="Sobre mí" style="height: 120px;"></textarea>
-          <label for="aboutMe">Sobre mí</label>
-        </div>
-
-        <!-- Botón guardar -->
         <div class="d-flex justify-content-end">
           <button class="btn btn-success btn-lg px-4 d-flex align-items-center gap-2 mt-4"
+                  style="border-radius: 3px;"
                   type="submit"
-                  [disabled]="!profileInfoForm.valid || savingIsLoading || !profileInfoForm.dirty"
+                  [disabled]="!profileInfoForm.valid || savingDetailedData || !profileInfoForm.dirty"
                   (click)="updateProfileInfo()">
-            <mat-spinner *ngIf="savingIsLoading" diameter="20" strokeWidth="3" class="white-spinner"></mat-spinner>
-            <div *ngIf="!savingIsLoading">Guardar</div>
+            <mat-spinner *ngIf="savingDetailedData" diameter="20" strokeWidth="3" class="white-spinner"></mat-spinner>
+            <div *ngIf="!savingDetailedData">Guardar</div>
           </button>
         </div>
-      </form>
+      </div>
     </div>
-  </div>
 </div>
 
   <app-custom-footer></app-custom-footer>

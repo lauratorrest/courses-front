@@ -18,9 +18,10 @@ export class SettingsComponent implements OnInit {
   currentUserEmail: string | null = null;
   profilePictureUrl: string | undefined;
   nameInitial: string | undefined;
-  userInfoIsLoading: boolean = false;
-  savingIsLoading: boolean = false;
+  userInfoIsLoading: boolean = true;
+  savingDetailedData: boolean = false;
   profileInfoForm!: FormGroup;
+  uploadingImageLoading: boolean = false;
 
   constructor(
     private fb: FormBuilder, 
@@ -30,9 +31,11 @@ export class SettingsComponent implements OnInit {
     private fileService: FilesService){}
 
   ngOnInit(): void {
+    this.userInfoIsLoading = true;
     this.currentUserLogic();
     this.buildForm();
     this.loadCurrentUserData();
+    this.userInfoIsLoading = false;
   }
 
   private currentUserLogic() {
@@ -56,14 +59,12 @@ export class SettingsComponent implements OnInit {
   }
 
   loadCurrentUserData() {
-    this.userInfoIsLoading = true;
     let emailRequest: EmailRequest = {
       email: String(this.currentUserEmail)
     }
     this.userService.getDetailedUserData(emailRequest).subscribe(response => {
       this.nameInitial = response.fullName[0];
       this.setLoadedInfoToForm(response);
-      this.userInfoIsLoading = false;
     });
   }
 
@@ -92,9 +93,18 @@ export class SettingsComponent implements OnInit {
 
       const allowedExtensions = ['.jpg', '.jpeg', '.png'];
       if (!allowedExtensions.some(ext => file.name.toLocaleLowerCase().endsWith(ext))) {
-        this.alertService.errorAlert('Error de archivo', 'Solo se pueden subir archivos de tipo imagen.');
+        this.alertService.errorAlert('Error de archivo', 'Solo se pueden subir archivos de tipo JPG, JPEG y PNG.');
+        this.uploadingImageLoading = false;
+        return;
       }
 
+      if (file && file.size > 1024 * 1024) {
+        this.alertService.errorAlert('Error de archivo', 'Máximo 1MB.');
+        this.uploadingImageLoading = false;
+        return;
+      }
+
+      this.uploadingImageLoading = true;
       this.fileService.uploadFile(file).subscribe({
         next: (response) => {
           let updateProfilePicRequest: UpdateProfilePicRequest = {
@@ -107,22 +117,26 @@ export class SettingsComponent implements OnInit {
               this.profilePictureUrl = Constants.CLOUDINARY_PREFIX + response.fileUrl;
               this.alertService.successAlert('Foto actualizada con éxito.');
             },
-            error: (error) => {
-              let errorMessage: string = error.error?.message || 'Ocurrió un error inesperado';
+            error: (error2) => {
+              console.log('error: ', error2);
+              let errorMessage: string = error2.error?.message || 'Ocurrió un error inesperado';
               this.alertService.errorAlert('Error', errorMessage);
             }
           });
         },
-        error: (error) => {
-          let errorMessage: string = error.error?.message || 'Ocurrió un error inesperado';
+        error: (error1) => {
+          console.log('error: ', error1);
+          let errorMessage: string = error1.error?.message || 'Ocurrió un error inesperado';
           this.alertService.errorAlert('Problema', errorMessage);
         }
       });
     }
+
+    this.uploadingImageLoading = false;
   }
 
   updateProfileInfo() {
-    this.savingIsLoading = true;
+    this.savingDetailedData = true;
     
     let updateRequest: UpdateUserDetailsRequest = {
       email: String(localStorage.getItem('currentUser')),
@@ -146,7 +160,13 @@ export class SettingsComponent implements OnInit {
       }
     });
 
-    this.savingIsLoading = false;
+    this.savingDetailedData = false;
+  }
+
+  openLink(url: string): void {
+    if (url) {
+      window.open(url, '_blank');
+    }
   }
 
   logout() {

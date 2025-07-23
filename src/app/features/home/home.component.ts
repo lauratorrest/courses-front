@@ -11,6 +11,7 @@ import { EmailRequest } from '../../utils/interface/user-request';
 export class HomeComponent implements OnInit {
 
   currentUserEmail: string | null = null;
+  token: string | null = null;
 
   constructor(private router: Router, private userService: UserService){}
 
@@ -21,6 +22,7 @@ export class HomeComponent implements OnInit {
 
   private currentUserLogic() {
     this.currentUserEmail = localStorage.getItem('currentUser');
+    this.token = localStorage.getItem('token');
     if (!this.currentUserEmail) {
       this.logout();
     }

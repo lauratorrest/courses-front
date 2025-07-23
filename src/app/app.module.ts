@@ -23,6 +23,7 @@ import { SettingsComponent } from './features/profile-settings/profile-settings.
 import { MatMenuModule } from '@angular/material/menu';
 import { SharedModuleModule } from "./utils/modules/shared-module/shared-module.module";
 import { CustomFooterComponent } from './utils/components/custom-footer/custom-footer.component';
+import { NotFoundComponent } from './utils/components/not-found/not-found.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { CustomFooterComponent } from './utils/components/custom-footer/custom-f
     SignInComponent,
     SignUpComponent,
     SettingsComponent,
+    NotFoundComponent,
   ],
   imports: [
     SharedModuleModule,
