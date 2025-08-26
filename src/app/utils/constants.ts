@@ -18,4 +18,7 @@ export class Constants {
   public static readonly UPLOAD_FILE = `${this.API_PATH}/file/upload`
   public static readonly CLOUDINARY_PREFIX = `https://res.cloudinary.com`
 
+  // COURSE
+  public static readonly FIND_ALL_ACTIVE_COURSES = `${this.API_PATH}/course/find-all`;
+
 }

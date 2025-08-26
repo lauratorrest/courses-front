@@ -59,7 +59,7 @@ export class SignInComponent implements OnInit {
       next: (response) => {
         localStorage.setItem('currentUser', response.email);
         localStorage.setItem('token', response.token);
-        this.router.navigate(['/home']);
+        this.router.navigate(['/']);
       },
       error: (error) => {
         let errorMessage: string = error.error?.message || 'Ocurrió un error inesperado';

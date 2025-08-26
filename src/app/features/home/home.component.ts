@@ -17,7 +17,6 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.currentUserLogic();
-    this.loadCurrentUserData();
   }
 
   private currentUserLogic() {
@@ -26,15 +25,6 @@ export class HomeComponent implements OnInit {
     if (!this.currentUserEmail) {
       this.logout();
     }
-  }
-
-  loadCurrentUserData() {
-    let emailRequest: EmailRequest = {
-      email: String(this.currentUserEmail)
-    }
-    this.userService.getInitialContentUserData(emailRequest).subscribe(response => {
-      
-    });
   }
 
   logout() {

@@ -1,0 +1,27 @@
+.init-content-title {
+    font-size: 24px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+.course-pic {
+    width: 100%; 
+    height: auto; 
+    object-fit: contain;
+}
+
+.couse-sub {
+    color: gray;
+    font-size: 12px;
+}
+
+.star-rating {
+  font-size: 2em;
+  color: #ffc107;
+}
+
+.spinner-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+}

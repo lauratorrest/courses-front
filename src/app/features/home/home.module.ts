@@ -8,6 +8,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from "@angular/material/icon";
 import { SharedModuleModule } from 'src/app/utils/modules/shared-module/shared-module.module';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { SharedModuleModule } from 'src/app/utils/modules/shared-module/shared-m
     MatDividerModule,
     MatIconModule,
     SharedModuleModule,
+    MatProgressSpinnerModule
 ]
 })
 export class HomeModule { }

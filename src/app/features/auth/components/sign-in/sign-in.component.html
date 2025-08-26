@@ -52,7 +52,8 @@
   
   <button class="btn btn-success btn-lg w-100 d-flex justify-content-center align-items-center" 
           style="border-radius: 3px;"
-          type="submit" [disabled]="!signInForm.valid || loading" 
+          type="submit" 
+          [disabled]="!signInForm.valid || loading" 
           (click)="signIn()">
     <mat-spinner *ngIf="loading" diameter="35" strokeWidth="3" class="white-spinner"></mat-spinner>
     <div *ngIf="!loading">Iniciar Sesión</div>
